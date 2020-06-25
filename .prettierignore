@@ -1,0 +1,14 @@
+# node_modules folder
+node_modules/
+
+# Yarn folder
+.yarn/
+
+# PnP runtime
+.pnp.*
+
+# Yarn lockfile
+yarn.lock
+
+# Compiled files
+lib/

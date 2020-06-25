@@ -1,0 +1,5 @@
+# Normalize line endings
+* text=auto
+
+# Hide Yarn files from GitHub's language statistics
+/.yarn/** linguist-vendored

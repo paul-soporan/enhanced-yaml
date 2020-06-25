@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    /* Project Options */
+    "allowJs": true,
+    "checkJs": true,
+    "declaration": true,
+    "importHelpers": true,
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "noEmit": true,
+    "sourceMap": true,
+    "target": "ES6",
+
+    /* Module Resolution */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+
+    /* Strict Checks */
+    "strict": true,
+
+    /* Linter Checks */
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    /* Experimental */
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    /* Advanced */
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
+    "newLine": "lf",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true
+  },
+  "include": ["src/**/*", "tests/**/*"],
+  "files": ["rollup.config.js", "jest.config.js", ".eslintrc.js", ".prettierrc.js"],
+  "exclude": ["node_modules"]
+}
