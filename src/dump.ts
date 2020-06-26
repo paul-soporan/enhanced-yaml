@@ -52,7 +52,16 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
   if (original) {
     const originalDocument = parseDocument(original, yamlOptions);
 
-    Object.assign(document, pick(originalDocument, ['contents', 'anchors']));
+    Object.assign(
+      document,
+      pick(originalDocument, [
+        'contents',
+        'anchors',
+        'comment',
+        'commentBefore',
+        'directivesEndMarker',
+      ]),
+    );
   }
 
   const valueNode = createNode(value, /* wrapScalars */ true);

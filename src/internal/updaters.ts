@@ -35,7 +35,7 @@ export function updateSequence(original: unknown, updated: YAMLSeq): YAMLSeq {
 export function updateValue(original: unknown, updated: unknown): SupportedNode {
   /**
    * Because `yaml` stores nodes by reference and we mutate the original nodes,
-   * both anchors and aliases are updated automatically, so we can just check for equality
+   * both anchors and aliases are updated automatically, so we can just check for equality.
    */
   if (original instanceof Alias && areValuesEqual(original.source, updated)) {
     return original;

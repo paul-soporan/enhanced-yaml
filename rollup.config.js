@@ -14,7 +14,6 @@ const config = {
       globals: {
         yaml: 'yaml',
         'yaml/types': 'types',
-        'yaml/util': 'util',
       },
     },
     {

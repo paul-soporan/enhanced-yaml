@@ -82,6 +82,40 @@ describe('dump', () => {
           );
         });
       });
+
+      describe('Document', () => {
+        it('should preserve comments and separators attached to the document', () => {
+          expect(
+            dump(
+              10,
+              {},
+              joinYaml(
+                // prettier-ignore
+                [
+                  '# Before: Document',
+                  '---',
+                  '# Above',
+                  '42 # Aside',
+                  '',
+                  '# After: Document',
+                ],
+              ),
+            ),
+          ).toEqual(
+            joinYaml(
+              // prettier-ignore
+              [
+                '# Before: Document',
+                '---',
+                '# Above',
+                '10 # Aside',
+                '',
+                '# After: Document',
+              ],
+            ),
+          );
+        });
+      });
     });
   });
 });
