@@ -37,6 +37,11 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "include": ["src/**/*", "tests/**/*"],
   "files": ["rollup.config.js", "jest.config.js", ".eslintrc.js", ".prettierrc.js"],
   "exclude": ["node_modules"]

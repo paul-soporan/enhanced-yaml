@@ -1,8 +1,8 @@
-import { Scalar, Pair, YAMLMap, YAMLSeq } from 'yaml/types';
+import { Alias, Scalar, Pair, YAMLMap, YAMLSeq } from 'yaml/types';
 import { makeUpdater } from './makeUpdater';
 import { areValuesEqual } from './checks';
 
-export type SupportedNode = Scalar | Pair | YAMLMap | YAMLSeq;
+export type SupportedNode = Alias | Scalar | Pair | YAMLMap | YAMLSeq;
 
 export function updateScalar(original: unknown, updated: Scalar): Scalar {
   return makeUpdater(Scalar, original).update(updated, { value: updated.value as unknown });
@@ -33,6 +33,14 @@ export function updateSequence(original: unknown, updated: YAMLSeq): YAMLSeq {
 }
 
 export function updateValue(original: unknown, updated: unknown): SupportedNode {
+  /**
+   * Because `yaml` stores nodes by reference and we mutate the original nodes,
+   * both anchors and aliases are updated automatically, so we can just check for equality
+   */
+  if (original instanceof Alias && areValuesEqual(original.source, updated)) {
+    return original;
+  }
+
   if (updated instanceof Scalar) {
     return updateScalar(original, updated);
   }

@@ -1,6 +1,8 @@
 import { Document, parseDocument, createNode, Options as YamlOptions } from 'yaml';
 // eslint-disable-next-line import/no-extraneous-dependencies -- Inlined by Rollup
 import defaults from 'lodash/defaults';
+// eslint-disable-next-line import/no-extraneous-dependencies -- Inlined by Rollup
+import pick from 'lodash/pick';
 import { updaters } from './internal';
 import { Schema } from './Schema';
 
@@ -48,7 +50,9 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
   const document = new Document(yamlOptions);
 
   if (original) {
-    document.contents = parseDocument(original, yamlOptions).contents;
+    const originalDocument = parseDocument(original, yamlOptions);
+
+    Object.assign(document, pick(originalDocument, ['contents', 'anchors']));
   }
 
   const valueNode = createNode(value, /* wrapScalars */ true);
