@@ -18,7 +18,7 @@ describe('dump', () => {
                 ],
               ),
             ),
-          ).toEqual(
+          ).toStrictEqual(
             joinYaml(
               // prettier-ignore
               [
@@ -46,7 +46,7 @@ describe('dump', () => {
                 ],
               ),
             ),
-          ).toEqual(
+          ).toStrictEqual(
             joinYaml(
               // prettier-ignore
               [
@@ -71,12 +71,95 @@ describe('dump', () => {
                 ],
               ),
             ),
-          ).toEqual(
+          ).toStrictEqual(
             joinYaml(
               // prettier-ignore
               [
                 '# Above: foo',
                 'foo: 20 # Aside: foo',
+              ],
+            ),
+          );
+        });
+      });
+
+      describe('Sequences', () => {
+        it('should preserve comments attached to sequence items (scalars)', () => {
+          expect(
+            dump(
+              [4, 1, 3],
+              {},
+              joinYaml(
+                // prettier-ignore
+                [
+                  '- 1 # Aside: 1',
+                  '- 2 # Aside: 2',
+                  '- 3 # Aside: 3',
+                  '- 4 # Aside: 4',
+                ],
+              ),
+            ),
+          ).toStrictEqual(
+            joinYaml(
+              // prettier-ignore
+              [
+                '- 4 # Aside: 4',
+                '- 1 # Aside: 1',
+                '- 3 # Aside: 3',
+              ],
+            ),
+          );
+        });
+
+        it('should preserve comments attached to sequence items (maps)', () => {
+          expect(
+            dump(
+              [{ bar: [] }, { foo: {} }],
+              {},
+              joinYaml(
+                // prettier-ignore
+                [
+                  '- foo: # Aside: foo',
+                  '    a',
+                  '- bar: # Aside: bar',
+                  '    b',
+                ],
+              ),
+            ),
+          ).toStrictEqual(
+            joinYaml(
+              // prettier-ignore
+              [
+                '- bar: # Aside: bar',
+                '    []',
+                '- foo: # Aside: foo',
+                '    {}',
+              ],
+            ),
+          );
+        });
+
+        it('should preserve comments attached to sequence items (sequences)', () => {
+          expect(
+            dump(
+              [[1, 2, 3]],
+              {},
+              joinYaml(
+                // prettier-ignore
+                [
+                  '- - 1 # Aside: first 1',
+                  '- - 1 # Aside: second 1',
+                  '  - 2',
+                ],
+              ),
+            ),
+          ).toStrictEqual(
+            joinYaml(
+              // prettier-ignore
+              [
+                '- - 1 # Aside: second 1',
+                '  - 2',
+                '  - 3',
               ],
             ),
           );
@@ -101,7 +184,7 @@ describe('dump', () => {
                 ],
               ),
             ),
-          ).toEqual(
+          ).toStrictEqual(
             joinYaml(
               // prettier-ignore
               [

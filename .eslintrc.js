@@ -38,6 +38,10 @@ const config = {
         functions: false,
       },
     ],
+    'import/prefer-default-export': 'off',
+    'import/named': 'off',
+    'unicorn/no-reduce': 'off',
+    'unicorn/no-null': 'off',
     'unicorn/filename-case': [
       'error',
       {
@@ -48,8 +52,6 @@ const config = {
         },
       },
     ],
-    'import/prefer-default-export': 'off',
-    'import/named': 'off',
   },
   overrides: [
     {

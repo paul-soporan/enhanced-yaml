@@ -17,7 +17,7 @@ describe('dump', () => {
               ],
             ),
           ),
-        ).toEqual(
+        ).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -41,7 +41,7 @@ describe('dump', () => {
               ],
             ),
           ),
-        ).toEqual(
+        ).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -65,7 +65,7 @@ describe('dump', () => {
               ],
             ),
           ),
-        ).toEqual(
+        ).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -89,7 +89,7 @@ describe('dump', () => {
               ],
             ),
           ),
-        ).toEqual(
+        ).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -101,7 +101,7 @@ describe('dump', () => {
       });
 
       it('should not alias identical values that were not originally aliases (scalars)', () => {
-        expect(dump({ foo: 1, bar: 1 })).toEqual(
+        expect(dump({ foo: 1, bar: 1 })).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -113,7 +113,7 @@ describe('dump', () => {
       });
 
       it('should not alias identical values that were not originally aliases (lists)', () => {
-        expect(dump({ foo: [1, 2], bar: [1, 2] })).toEqual(
+        expect(dump({ foo: [1, 2], bar: [1, 2] })).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -129,7 +129,7 @@ describe('dump', () => {
       });
 
       it('should not alias identical values that were not originally aliases (maps)', () => {
-        expect(dump({ foo: { a: 1 }, bar: { a: 1 } })).toEqual(
+        expect(dump({ foo: { a: 1 }, bar: { a: 1 } })).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
@@ -145,7 +145,7 @@ describe('dump', () => {
       it('should not alias identical references that were not originally aliases', () => {
         const map = { a: 1 };
 
-        expect(dump({ foo: map, bar: map })).toEqual(
+        expect(dump({ foo: map, bar: map })).toStrictEqual(
           joinYaml(
             // prettier-ignore
             [
