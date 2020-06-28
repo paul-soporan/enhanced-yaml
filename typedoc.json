@@ -1,0 +1,18 @@
+{
+  "inputFiles": ["./src"],
+  "exclude": ["*.js", "**/tests/**"],
+  "mode": "file",
+  "out": "docs",
+  "includeVersion": true,
+  "toc": [
+    "safeDump",
+    "safeLoad",
+    "dump",
+    "load",
+    "SafeDumpOptions",
+    "SafeLoadOptions",
+    "DumpOptions",
+    "LoadOptions",
+    "Schema"
+  ]
+}
