@@ -7,6 +7,10 @@ describe('dump', () => {
       expect(dump(10)).toStrictEqual('10\n');
     });
 
+    it('should dump null as null', () => {
+      expect(dump(null)).toStrictEqual('null\n');
+    });
+
     it('should dump arrays as sequences', () => {
       expect(dump([1, 2, 3])).toStrictEqual(
         // prettier-ignore
@@ -41,6 +45,33 @@ describe('dump', () => {
         joinYaml([
           'a: 1',
           'b: 2',
+        ]),
+      );
+    });
+
+    it('should dump objects with null values as sets', () => {
+      expect(dump({ a: null, b: null })).toStrictEqual(
+        // prettier-ignore
+        joinYaml([
+          '? a',
+          '? b',
+        ]),
+      );
+    });
+
+    it('should dump maps with null values as sets', () => {
+      expect(
+        dump(
+          new Map([
+            ['a', null],
+            ['b', null],
+          ]),
+        ),
+      ).toStrictEqual(
+        // prettier-ignore
+        joinYaml([
+          '? a',
+          '? b',
         ]),
       );
     });
