@@ -2,16 +2,7 @@ import { Alias, Scalar, Pair, Collection } from 'yaml/types';
 import { areValuesEqual } from './equality';
 
 /**
- * A number between -1 and 1.
- *
- * Meaning:
- * - -1 -> non-equal types and non-similar values
- * - 0 -> equal types and non-similar values
- * - 1 -> equal types and equal values
- *
- * Floating-point numbers represent the average between the scores of the elements in a list.
- *
- * All scores higher than -1 represent at least a partial match.
+ * A number between 0 and 1.
  *
  * Used to pick the most similar value in a list to a given value.
  */
@@ -95,16 +86,8 @@ export function computeSimilarityScore(a: unknown, b: unknown): SimilarityScore 
   }
 
   /**
-   * Used to disambiguate between 2 cases:
-   * - equal types but non-similar values (e.g. 2 arrays without common elements)
-   * - non-equal types and non-similar values (e.g. 1 array and 1 object)
-   *
-   * The former should produce a higher score than the latter.
+   * Includes the case of non-equal primitives.
    */
-  if (Object.prototype.toString.call(a) !== Object.prototype.toString.call(b)) {
-    return -1;
-  }
-
   return 0;
 }
 
@@ -123,10 +106,5 @@ export function getMostSimilarOriginalItem(
 
   usedIndices.add(maxScoreIndex);
 
-  /**
-   * -1 can mean 2 things:
-   * 1) There are no unused array elements remaining.
-   * 2) The score is -1, which means that types don't match.
-   */
   return maxScoreIndex !== -1 ? original[maxScoreIndex] : null;
 }

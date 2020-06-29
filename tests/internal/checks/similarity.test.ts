@@ -16,10 +16,6 @@ describe('internal', () => {
         expect(similarity.computeSimilarityScore('foo', 'bar')).toStrictEqual(0);
       });
 
-      it('should compute a similarity score of -1 for primitives with different types', () => {
-        expect(similarity.computeSimilarityScore('foo', 1)).toStrictEqual(-1);
-      });
-
       it('should compute a similarity score of 1 for arrays with identical elements', () => {
         expect(similarity.computeSimilarityScore(['a'], ['a'])).toStrictEqual(1);
       });
@@ -51,34 +47,18 @@ describe('internal', () => {
       });
 
       test('similarity scores for arrays should be proportional to the number of matching elements', () => {
-        const array = ['a', 'b', 'c'];
+        const updated = ['a', 'b', 'c'];
 
-        const firstOneMatch = similarity.computeSimilarityScore(array, ['a']);
-        const secondOneMatch = similarity.computeSimilarityScore(array, ['a', 'd']);
+        const firstOneMatch = similarity.computeSimilarityScore(updated, ['a']);
+        const secondOneMatch = similarity.computeSimilarityScore(updated, ['a', 'd']);
 
-        const firstTwoMatch = similarity.computeSimilarityScore(array, ['a', 'b']);
-        const secondTwoMatch = similarity.computeSimilarityScore(array, ['a', 'c']);
+        const firstTwoMatch = similarity.computeSimilarityScore(updated, ['a', 'b']);
+        const secondTwoMatch = similarity.computeSimilarityScore(updated, ['a', 'c']);
 
         expect(firstOneMatch).toStrictEqual(secondOneMatch);
         expect(firstTwoMatch).toStrictEqual(secondTwoMatch);
 
         expect(firstOneMatch).toBeLessThan(firstTwoMatch);
-      });
-
-      test('similarity scores should be higher when the types match', () => {
-        const firstUniqueArray = ['a'];
-        const secondUniqueArray = ['b'];
-
-        const firstUniqueObject = { a: 1 };
-        const secondUniqueObject = { b: 1 };
-
-        expect(
-          similarity.computeSimilarityScore(firstUniqueArray, secondUniqueArray),
-        ).toBeGreaterThan(similarity.computeSimilarityScore(firstUniqueArray, firstUniqueObject));
-
-        expect(
-          similarity.computeSimilarityScore(firstUniqueObject, secondUniqueObject),
-        ).toBeGreaterThan(similarity.computeSimilarityScore(firstUniqueObject, firstUniqueArray));
       });
     });
   });
