@@ -38,5 +38,27 @@ describe('internal', () => {
         }),
       ).toStrictEqual([{ updatedItem: 1, originalItem: 1 }]);
     });
+
+    it('should set all original items to null when the original array is empty', () => {
+      expect(
+        pairItems({
+          updated: [1, 2, 3],
+          original: [],
+        }),
+      ).toStrictEqual([
+        { updatedItem: 1, originalItem: null },
+        { updatedItem: 2, originalItem: null },
+        { updatedItem: 3, originalItem: null },
+      ]);
+    });
+
+    it('should return an empty array when the updated array is empty', () => {
+      expect(
+        pairItems({
+          updated: [],
+          original: [1, 2, 3],
+        }),
+      ).toStrictEqual([]);
+    });
   });
 });

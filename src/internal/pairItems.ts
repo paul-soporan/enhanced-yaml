@@ -8,6 +8,10 @@ export function pairItems<UpdatedItem, OriginalItem>({
   updated: UpdatedItem[];
   original: OriginalItem[];
 }): Array<{ updatedItem: UpdatedItem; originalItem: OriginalItem | null }> {
+  if (original.length === 0) {
+    return updated.map((updatedItem) => ({ updatedItem, originalItem: null }));
+  }
+
   const items = updated
     .flatMap((updatedItem) =>
       original.map(
