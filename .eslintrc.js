@@ -32,6 +32,7 @@ const config = {
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   rules: {
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
     '@typescript-eslint/no-use-before-define': [
       'error',
       {
