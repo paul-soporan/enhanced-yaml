@@ -1,6 +1,6 @@
 import { Alias, Scalar, Pair, YAMLMap, YAMLSeq } from 'yaml/types';
 import { makeUpdater } from './makeUpdater';
-import { getMostSimilarOriginalItem } from './checks/similarity';
+import { pairItems } from './pairItems';
 import { areValuesEqual } from './checks/equality';
 
 export type SupportedNode = Alias | Scalar | Pair | YAMLMap | YAMLSeq;
@@ -30,22 +30,13 @@ export function updateMap(original: unknown, updated: YAMLMap): YAMLMap {
 }
 
 export function updateSequence(original: unknown, updated: YAMLSeq): YAMLSeq {
-  const usedIndices = new Set<number>();
-
   return makeUpdater(YAMLSeq, original).update(updated, (originalSequence) => ({
-    items: updated.items.map((updatedItem: unknown) => {
-      const originalItem = getMostSimilarOriginalItem(
-        updatedItem,
-        originalSequence.items,
-        usedIndices,
-      );
-
-      if (originalItem === null) {
-        return updatedItem;
-      }
-
-      return updateValue(originalItem, updatedItem);
-    }),
+    items: pairItems({
+      updated: updated.items as unknown[],
+      original: originalSequence.items as unknown[],
+    }).map(({ updatedItem, originalItem }) =>
+      originalItem ? updateValue(originalItem, updatedItem) : updatedItem,
+    ),
   }));
 }
 

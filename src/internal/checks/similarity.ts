@@ -90,21 +90,3 @@ export function computeSimilarityScore(a: unknown, b: unknown): SimilarityScore 
    */
   return 0;
 }
-
-export function getMostSimilarOriginalItem(
-  updatedItem: unknown,
-  original: Array<unknown>,
-  usedIndices: Set<number>,
-): unknown | null {
-  const scores = original.map((originalItem) => computeSimilarityScore(originalItem, updatedItem));
-
-  const maxScore = Math.max(...scores);
-
-  const maxScoreIndex = scores.findIndex(
-    (score, index) => score === maxScore && !usedIndices.has(index),
-  );
-
-  usedIndices.add(maxScoreIndex);
-
-  return maxScoreIndex !== -1 ? original[maxScoreIndex] : null;
-}
