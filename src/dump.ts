@@ -16,6 +16,11 @@ interface RequiredDumpOptions {
   indentBlockSequences: boolean;
 
   /**
+   * @default true
+   */
+  prettyErrors: boolean;
+
+  /**
    * @default 'core'
    */
   schema: Schema;
@@ -24,6 +29,7 @@ interface RequiredDumpOptions {
 const defaultDumpOptions: RequiredDumpOptions = {
   indent: 2,
   indentBlockSequences: true,
+  prettyErrors: true,
   schema: 'core',
 };
 
@@ -37,6 +43,7 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
   const yamlOptions: YamlOptions = {
     indent: dumpOptions.indent,
     indentSeq: dumpOptions.indentBlockSequences,
+    prettyErrors: dumpOptions.prettyErrors,
     schema: dumpOptions.schema,
   };
 

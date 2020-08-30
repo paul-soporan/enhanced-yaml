@@ -4,12 +4,18 @@ import type { Schema } from './types';
 
 interface RequiredLoadOptions {
   /**
+   * @default true
+   */
+  prettyErrors: boolean;
+
+  /**
    * @default 'core'
    */
   schema: Schema;
 }
 
 const defaultLoadOptions: RequiredLoadOptions = {
+  prettyErrors: true,
   schema: 'core',
 };
 
@@ -21,6 +27,7 @@ export function load(source: string, options: LoadOptions = {}): unknown {
   const loadOptions = defaults(options, defaultLoadOptions) as RequiredLoadOptions;
 
   const yamlOptions: YamlOptions = {
+    prettyErrors: loadOptions.prettyErrors,
     schema: loadOptions.schema,
   };
 
