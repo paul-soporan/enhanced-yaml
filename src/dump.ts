@@ -45,6 +45,11 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
   if (original) {
     const originalDocument = parseDocument(original, yamlOptions);
 
+    const firstError = originalDocument.errors[0];
+    if (typeof firstError !== 'undefined') {
+      throw firstError;
+    }
+
     Object.assign(
       document,
       pick(originalDocument, [

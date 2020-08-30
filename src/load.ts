@@ -26,6 +26,11 @@ export function load(source: string, options: LoadOptions = {}): unknown {
 
   const document = parseDocument(source, yamlOptions);
 
+  const firstError = document.errors[0];
+  if (typeof firstError !== 'undefined') {
+    throw firstError;
+  }
+
   return document.toJSON() as unknown;
 }
 
