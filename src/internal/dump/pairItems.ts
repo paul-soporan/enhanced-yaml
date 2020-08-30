@@ -66,7 +66,9 @@ export function pairItems<UpdatedItem, OriginalItem>({
         // If the updated item hasn't already been paired and we've run
         // out of original items, we pair the updated item with null
         remainingOriginalItems.size === 0 ||
-        // If the items are non-similar, we pair the updated item with null
+        // If the items are non-similar, we pair the updated item with null.
+        // This is because we sort the pairs by score, so if the score is 0, we can
+        // be sure that this item won't be included in a pair with a higher score.
         score === 0
       ) {
         return { updatedItem, originalItem: null };
