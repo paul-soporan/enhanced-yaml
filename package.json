@@ -1,7 +1,9 @@
 {
   "name": "smart-yaml",
+  "description": "YAML parser and stringifier that preserves comments and styling",
   "version": "0.1.0",
   "license": "MIT",
+  "homepage": "https://github.com/paul-soporan/smart-yaml#readme",
   "author": {
     "name": "Paul Soporan",
     "url": "https://github.com/paul-soporan"
@@ -71,6 +73,19 @@
   },
   "files": [
     "/lib/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paul-soporan/smart-yaml.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paul-soporan/smart-yaml/issues"
+  },
+  "keywords": [
+    "yaml",
+    "parser",
+    "stringifier",
+    "comments"
   ],
   "config": {
     "commitizen": {
