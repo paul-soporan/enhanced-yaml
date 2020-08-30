@@ -8,10 +8,6 @@ export function pairItems<UpdatedItem, OriginalItem>({
   updated: UpdatedItem[];
   original: OriginalItem[];
 }): Array<{ updatedItem: UpdatedItem; originalItem: OriginalItem | null }> {
-  if (original.length === 0) {
-    return updated.map((updatedItem) => ({ updatedItem, originalItem: null }));
-  }
-
   const items = updated
     .flatMap((updatedItem) =>
       original.map(
@@ -42,7 +38,7 @@ export function pairItems<UpdatedItem, OriginalItem>({
   const remainingUpdatedItems = new Set(updated);
   const remainingOriginalItems = new Set(original);
 
-  return mapAndFilter(items, ([updatedItem, originalItem, score]) => {
+  const itemPairs = mapAndFilter(items, ([updatedItem, originalItem, score]) => {
     if (!remainingUpdatedItems.has(updatedItem)) {
       return mapAndFilter.skip;
     }
@@ -60,8 +56,22 @@ export function pairItems<UpdatedItem, OriginalItem>({
     remainingOriginalItems.delete(originalItem);
 
     return { updatedItem, originalItem };
-  }).sort(
-    ({ updatedItem: aUpdatedItem }, { updatedItem: bUpdatedItem }) =>
-      updated.indexOf(aUpdatedItem) - updated.indexOf(bUpdatedItem),
-  );
+  });
+
+  /*
+   * We pair the items again to make sure that we preserve the order of
+   * the updated array and that we don't lose any of the updated items.
+   */
+  return updated.map((updatedItem) => {
+    const index = itemPairs.findIndex(
+      ({ updatedItem: updatedItemCandidate }) => updatedItemCandidate === updatedItem,
+    );
+    if (index === -1) {
+      return { updatedItem, originalItem: null };
+    }
+
+    const [{ originalItem }] = itemPairs.splice(index, 1);
+
+    return { updatedItem, originalItem };
+  });
 }

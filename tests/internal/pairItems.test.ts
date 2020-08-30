@@ -60,5 +60,23 @@ describe('internal', () => {
         }),
       ).toStrictEqual([]);
     });
+
+    it("should pair duplicates with null when there aren't any original matches left", () => {
+      expect(
+        pairItems({
+          updated: [3, 3, 2, 2, 1, 1],
+          original: [3, 2, 1],
+        }),
+      ).toStrictEqual([
+        { updatedItem: 3, originalItem: 3 },
+        { updatedItem: 3, originalItem: null },
+        { updatedItem: 2, originalItem: 2 },
+        { updatedItem: 2, originalItem: null },
+        { updatedItem: 1, originalItem: 1 },
+        { updatedItem: 1, originalItem: null },
+      ]);
+    });
+
+    it.todo('should pair duplicates with duplicates correctly');
   });
 });

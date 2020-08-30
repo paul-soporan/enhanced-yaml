@@ -63,7 +63,7 @@ export function updateValue(
   updated: unknown,
   options: UpdaterOptions,
 ): SupportedNode {
-  /**
+  /*
    * Because `yaml` stores nodes by reference and we mutate the original nodes,
    * both anchors and aliases are updated automatically, so we can just check for equality.
    */
