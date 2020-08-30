@@ -15,12 +15,7 @@ const defaultLoadOptions: RequiredLoadOptions = {
 
 export type LoadOptions = Partial<RequiredLoadOptions>;
 
-export interface SafeLoadOptions extends LoadOptions {
-  /**
-   * @default Schema.FAILSAFE
-   */
-  schema?: Schema;
-}
+export type SafeLoadOptions = Omit<LoadOptions, 'schema'>;
 
 export function load(source: string, options: LoadOptions = {}): unknown {
   const loadOptions = defaults(options, defaultLoadOptions) as RequiredLoadOptions;
@@ -35,5 +30,5 @@ export function load(source: string, options: LoadOptions = {}): unknown {
 }
 
 export function safeLoad(source: string, options: SafeLoadOptions = {}): unknown {
-  return load(source, { schema: Schema.FAILSAFE, ...options });
+  return load(source, { ...options, schema: Schema.FAILSAFE });
 }

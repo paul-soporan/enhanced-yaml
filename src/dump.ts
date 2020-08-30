@@ -29,12 +29,7 @@ const defaultDumpOptions: RequiredDumpOptions = {
 
 export type DumpOptions = Partial<RequiredDumpOptions>;
 
-export interface SafeDumpOptions extends DumpOptions {
-  /**
-   * @default Schema.FAILSAFE
-   */
-  schema?: Schema;
-}
+export type SafeDumpOptions = Omit<DumpOptions, 'schema'>;
 
 export function dump(value: unknown, options: DumpOptions = {}, original?: string): string {
   const dumpOptions = defaults(options, defaultDumpOptions) as RequiredDumpOptions;
@@ -70,5 +65,5 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
 }
 
 export function safeDump(value: unknown, options: SafeDumpOptions = {}, original?: string): string {
-  return dump(value, { schema: Schema.FAILSAFE, ...options }, original);
+  return dump(value, { ...options, schema: Schema.FAILSAFE }, original);
 }
