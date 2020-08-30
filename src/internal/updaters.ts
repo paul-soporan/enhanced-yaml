@@ -3,11 +3,13 @@ import { Alias, Scalar, Pair, YAMLMap, YAMLSeq } from 'yaml/types';
 import { makeUpdater } from './makeUpdater';
 import { pairItems } from './pairItems';
 import { areValuesEqual } from './checks/equality';
+import { preserveOriginalCollectionOrdering } from './preserveOriginalCollectionOrdering';
 
 export type SupportedNode = Alias | Scalar | Pair | YAMLMap | YAMLSeq;
 
 export interface UpdaterOptions {
   document: Document;
+  preserveOriginalOrdering: boolean;
 }
 
 export function updateScalar(original: unknown, updated: Scalar): Scalar {
@@ -24,7 +26,9 @@ export function updatePair(original: unknown, updated: Pair, options: UpdaterOpt
 export function updateMap(original: unknown, updated: YAMLMap, options: UpdaterOptions): YAMLMap {
   const sortMapEntries = options.document.schema?.sortMapEntries;
 
-  const updatedMap = makeUpdater(YAMLMap, original).update(updated, (originalMap) => ({
+  const updater = makeUpdater(YAMLMap, original);
+
+  const updatedMap = updater.update(updated, (originalMap) => ({
     items: updated.items.map((pair) =>
       originalMap.has(pair.key)
         ? updatePair(
@@ -35,6 +39,10 @@ export function updateMap(original: unknown, updated: YAMLMap, options: UpdaterO
         : pair,
     ),
   }));
+
+  if (options.preserveOriginalOrdering) {
+    preserveOriginalCollectionOrdering(updater, updatedMap);
+  }
 
   if (typeof sortMapEntries === 'function') {
     updatedMap.items.sort(sortMapEntries);
@@ -48,7 +56,9 @@ export function updateSequence(
   updated: YAMLSeq,
   options: UpdaterOptions,
 ): YAMLSeq {
-  return makeUpdater(YAMLSeq, original).update(updated, (originalSequence) => ({
+  const updater = makeUpdater(YAMLSeq, original);
+
+  const updatedSequence = updater.update(updated, (originalSequence) => ({
     items: pairItems({
       updated: updated.items as unknown[],
       original: originalSequence.items as unknown[],
@@ -56,6 +66,12 @@ export function updateSequence(
       originalItem ? updateValue(originalItem, updatedItem, options) : updatedItem,
     ),
   }));
+
+  if (options.preserveOriginalOrdering) {
+    preserveOriginalCollectionOrdering(updater, updatedSequence);
+  }
+
+  return updatedSequence;
 }
 
 export function updateValue(

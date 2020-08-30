@@ -16,6 +16,11 @@ interface RequiredDumpOptions {
   indentBlockSequences: boolean;
 
   /**
+   * @default false
+   */
+  preserveOriginalOrdering: boolean;
+
+  /**
    * @default true
    */
   prettyErrors: boolean;
@@ -34,6 +39,7 @@ interface RequiredDumpOptions {
 const defaultDumpOptions: RequiredDumpOptions = {
   indent: 2,
   indentBlockSequences: true,
+  preserveOriginalOrdering: false,
   prettyErrors: true,
   schema: 'core',
   sortMapEntries: false,
@@ -94,7 +100,10 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
 
   const valueNode = createNode(value, /* wrapScalars */ true);
 
-  document.contents = updaters.updateValue(document.contents, valueNode, { document });
+  document.contents = updaters.updateValue(document.contents, valueNode, {
+    ...dumpOptions,
+    document,
+  });
 
   return document.toString();
 }
