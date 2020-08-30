@@ -27,7 +27,7 @@ jobs:
         shell: bash
 
       - name: 'Type-Check'
-        run: yarn typecheck
+        run: yarn type-check
         shell: bash
 
       - name: 'Format'

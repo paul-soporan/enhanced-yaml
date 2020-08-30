@@ -19,7 +19,7 @@
     "watch": "rollup -cw",
     "clean": "rimraf lib",
     "build:docs": "typedoc",
-    "typecheck": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "format": "prettier --check .",
     "lint": "eslint .",
     "test": "jest",
@@ -28,6 +28,7 @@
     "postpack": "run clean"
   },
   "dependencies": {
+    "lodash": "^4.17.20",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
@@ -59,7 +60,6 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "lint-staged": "^10.2.13",
-    "lodash": "^4.17.20",
     "prettier": "^2.1.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.26.8",

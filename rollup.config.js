@@ -1,32 +1,19 @@
 import ts from '@wessberg/rollup-plugin-ts';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import { name, publishConfig } from './package.json';
+import { publishConfig } from './package.json';
 
 /** @type {import('rollup').RollupOptions} */
 const config = {
   input: './src/index.ts',
   output: [
-    {
-      file: publishConfig.main,
-      format: 'umd',
-      name,
-      globals: {
-        yaml: 'yaml',
-        'yaml/types': 'types',
-      },
-    },
-    {
-      file: publishConfig.module,
-      format: 'esm',
-    },
+    { file: publishConfig.main, format: 'cjs' },
+    { file: publishConfig.module, format: 'esm' },
   ],
   plugins: [
     ts({ exclude: ['.yarn/cache/**'] }),
     commonjs({ extensions: ['.js', '.ts'] }),
-    resolve({
-      resolveOnly: ['lodash'],
-    }),
+    resolve({ resolveOnly: [] }),
   ],
 };
 

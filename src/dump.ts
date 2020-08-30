@@ -1,7 +1,5 @@
 import { Document, parseDocument, createNode, Options as YamlOptions } from 'yaml';
-// eslint-disable-next-line import/no-extraneous-dependencies -- Inlined by Rollup
 import defaults from 'lodash/defaults';
-// eslint-disable-next-line import/no-extraneous-dependencies -- Inlined by Rollup
 import pick from 'lodash/pick';
 import { updaters } from './internal';
 import { Schema } from './Schema';

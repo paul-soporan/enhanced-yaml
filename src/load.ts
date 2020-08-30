@@ -1,5 +1,4 @@
 import { parseDocument, Options as YamlOptions } from 'yaml';
-// eslint-disable-next-line import/no-extraneous-dependencies -- Inlined by Rollup
 import defaults from 'lodash/defaults';
 import { Schema } from './Schema';
 
