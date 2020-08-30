@@ -1,8 +1,8 @@
 import { Document, parseDocument, createNode, Options as YamlOptions } from 'yaml';
 import defaults from 'lodash/defaults';
 import pick from 'lodash/pick';
-import { updaters } from './internal';
-import type { Schema } from './types';
+import { updaters, assertions } from './internal';
+import type { Schema, Pair } from './types';
 
 interface RequiredDumpOptions {
   /**
@@ -24,6 +24,11 @@ interface RequiredDumpOptions {
    * @default 'core'
    */
   schema: Schema;
+
+  /**
+   * @default false
+   */
+  sortMapEntries: boolean | ((a: Pair, b: Pair) => number);
 }
 
 const defaultDumpOptions: RequiredDumpOptions = {
@@ -31,6 +36,7 @@ const defaultDumpOptions: RequiredDumpOptions = {
   indentBlockSequences: true,
   prettyErrors: true,
   schema: 'core',
+  sortMapEntries: false,
 };
 
 export type DumpOptions = Partial<RequiredDumpOptions>;
@@ -40,14 +46,31 @@ export type SafeDumpOptions = Omit<DumpOptions, 'schema'>;
 export function dump(value: unknown, options: DumpOptions = {}, original?: string): string {
   const dumpOptions = defaults(options, defaultDumpOptions) as RequiredDumpOptions;
 
+  const { sortMapEntries } = dumpOptions;
+
   const yamlOptions: YamlOptions = {
     indent: dumpOptions.indent,
     indentSeq: dumpOptions.indentBlockSequences,
     prettyErrors: dumpOptions.prettyErrors,
     schema: dumpOptions.schema,
+    sortMapEntries:
+      typeof sortMapEntries === 'function'
+        ? (a, b) => {
+            assertions.assertNode(a.key);
+            assertions.assertNode(a.value);
+            assertions.assertNode(b.key);
+            assertions.assertNode(b.value);
+
+            return sortMapEntries(
+              { key: a.key.toJSON(), value: a.value.toJSON() },
+              { key: b.key.toJSON(), value: b.value.toJSON() },
+            );
+          }
+        : dumpOptions.sortMapEntries,
   };
 
   const document = new Document(yamlOptions);
+  document.setSchema();
 
   if (original) {
     const originalDocument = parseDocument(original, yamlOptions);
@@ -71,7 +94,7 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
 
   const valueNode = createNode(value, /* wrapScalars */ true);
 
-  document.contents = updaters.updateValue(document.contents, valueNode);
+  document.contents = updaters.updateValue(document.contents, valueNode, { document });
 
   return document.toString();
 }
