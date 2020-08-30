@@ -2,7 +2,7 @@ import { Document, parseDocument, createNode, Options as YamlOptions } from 'yam
 import defaults from 'lodash/defaults';
 import pick from 'lodash/pick';
 import { updaters } from './internal';
-import { Schema } from './Schema';
+import type { Schema } from './types';
 
 interface RequiredDumpOptions {
   /**
@@ -16,7 +16,7 @@ interface RequiredDumpOptions {
   indentBlockSequences: boolean;
 
   /**
-   * @default Schema.CORE
+   * @default 'core'
    */
   schema: Schema;
 }
@@ -24,7 +24,7 @@ interface RequiredDumpOptions {
 const defaultDumpOptions: RequiredDumpOptions = {
   indent: 2,
   indentBlockSequences: true,
-  schema: Schema.CORE,
+  schema: 'core',
 };
 
 export type DumpOptions = Partial<RequiredDumpOptions>;
@@ -65,5 +65,5 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
 }
 
 export function safeDump(value: unknown, options: SafeDumpOptions = {}, original?: string): string {
-  return dump(value, { ...options, schema: Schema.FAILSAFE }, original);
+  return dump(value, { ...options, schema: 'failsafe' }, original);
 }

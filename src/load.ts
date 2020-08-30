@@ -1,16 +1,16 @@
 import { parseDocument, Options as YamlOptions } from 'yaml';
 import defaults from 'lodash/defaults';
-import { Schema } from './Schema';
+import type { Schema } from './types';
 
 interface RequiredLoadOptions {
   /**
-   * @default Schema.CORE
+   * @default 'core'
    */
   schema: Schema;
 }
 
 const defaultLoadOptions: RequiredLoadOptions = {
-  schema: Schema.CORE,
+  schema: 'core',
 };
 
 export type LoadOptions = Partial<RequiredLoadOptions>;
@@ -30,5 +30,5 @@ export function load(source: string, options: LoadOptions = {}): unknown {
 }
 
 export function safeLoad(source: string, options: SafeLoadOptions = {}): unknown {
-  return load(source, { ...options, schema: Schema.FAILSAFE });
+  return load(source, { ...options, schema: 'failsafe' });
 }
