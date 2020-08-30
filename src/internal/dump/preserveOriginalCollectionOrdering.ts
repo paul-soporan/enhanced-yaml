@@ -1,6 +1,12 @@
 import type { Collection } from 'yaml/types';
 import type { Updater } from './makeUpdater';
 
+/**
+ * Preserves the ordering of the original collection node.
+ *
+ * If an item from the updated node is missing in the original node,
+ * it will be moved to the end of the resulting node.
+ */
 export function preserveOriginalCollectionOrdering<T extends typeof Collection>(
   updater: Updater<T>,
   updatedCollection: InstanceType<T>,

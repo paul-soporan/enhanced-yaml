@@ -1,10 +1,14 @@
 import type { Document } from 'yaml';
 import { Alias, Scalar, Pair, YAMLMap, YAMLSeq } from 'yaml/types';
 import { makeUpdater } from './makeUpdater';
-import { pairItems } from './pairItems';
-import { areValuesEqual } from './checks/equality';
 import { preserveOriginalCollectionOrdering } from './preserveOriginalCollectionOrdering';
+import { pairItems } from './pairItems';
+import { areValuesEqual } from '../checks/equality';
 
+/**
+ * The nodes supported by the serializer.
+ * Using an unsupported node will cause the serializer to throw.
+ */
 export type SupportedNode = Alias | Scalar | Pair | YAMLMap | YAMLSeq;
 
 export interface UpdaterOptions {
@@ -12,10 +16,16 @@ export interface UpdaterOptions {
   preserveOriginalOrdering: boolean;
 }
 
+/**
+ * Updates a Scalar's value.
+ */
 export function updateScalar(original: unknown, updated: Scalar): Scalar {
   return makeUpdater(Scalar, original).update(updated, { value: updated.value as unknown });
 }
 
+/**
+ * Updates a Pair's key and value.
+ */
 export function updatePair(original: unknown, updated: Pair, options: UpdaterOptions): Pair {
   return makeUpdater(Pair, original).update(updated, (originalPair) => ({
     key: updateValue(originalPair.key, updated.key, options),
@@ -23,6 +33,11 @@ export function updatePair(original: unknown, updated: Pair, options: UpdaterOpt
   }));
 }
 
+/**
+ * Updates a Map's items and sorts them:
+ * - it preserves the original ordering if the `preserveOriginalOrdering` option is set
+ * - it sorts them based on the `sortMapEntries` option if set
+ */
 export function updateMap(original: unknown, updated: YAMLMap, options: UpdaterOptions): YAMLMap {
   const sortMapEntries = options.document.schema?.sortMapEntries;
 
@@ -51,6 +66,12 @@ export function updateMap(original: unknown, updated: YAMLMap, options: UpdaterO
   return updatedMap;
 }
 
+/**
+ * Updates a sequence's items by pairing each updated item with a
+ * corresponding original item based on a computed similarity score.
+ *
+ * It also preserves the original ordering if the `preserveOriginalOrdering` option is set.
+ */
 export function updateSequence(
   original: unknown,
   updated: YAMLSeq,
@@ -74,6 +95,9 @@ export function updateSequence(
   return updatedSequence;
 }
 
+/**
+ * Updates a supported value.
+ */
 export function updateValue(
   original: unknown,
   updated: unknown,

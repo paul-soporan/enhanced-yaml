@@ -49,6 +49,15 @@ export type DumpOptions = Partial<RequiredDumpOptions>;
 
 export type SafeDumpOptions = Omit<DumpOptions, 'schema'>;
 
+/**
+ * Stringifies a JavaScript value into the corresponding YAML string.
+ *
+ * Uses the `core` schema by default.
+ *
+ * @param value The JavaScript value to dump.
+ * @param options The `DumpOptions` that affect how the value is serialized.
+ * @param original The original YAML string. If set, this function will preserve all comments and styling from the original source.
+ */
 export function dump(value: unknown, options: DumpOptions = {}, original?: string): string {
   const dumpOptions = defaults(options, defaultDumpOptions) as RequiredDumpOptions;
 
@@ -108,6 +117,15 @@ export function dump(value: unknown, options: DumpOptions = {}, original?: strin
   return document.toString();
 }
 
+/**
+ * Serializes (stringifies) a JavaScript value into the corresponding YAML string.
+ *
+ * Uses the `failsafe` schema.
+ *
+ * @param value The JavaScript value to dump.
+ * @param options The `DumpOptions` that affect how the value is serialized.
+ * @param original The original YAML string. If set, this function will preserve all comments and styling from the original source.
+ */
 export function safeDump(value: unknown, options: SafeDumpOptions = {}, original?: string): string {
   return dump(value, { ...options, schema: 'failsafe' }, original);
 }

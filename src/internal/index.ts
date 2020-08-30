@@ -1,7 +1,10 @@
-export { makeUpdater, Updater } from './makeUpdater';
-export { pairItems } from './pairItems';
-export { mapAndFilter } from './mapAndFilter';
+export { makeUpdater, Updater } from './dump/makeUpdater';
+export { pairItems } from './dump/pairItems';
+export { preserveOriginalCollectionOrdering } from './dump/preserveOriginalCollectionOrdering';
+export * as updaters from './dump/updaters';
 
-export * as assertions from './assertions';
-export * as checks from './checks';
-export * as updaters from './updaters';
+export { mapAndFilter } from './utils/mapAndFilter';
+export * as assertions from './utils/assertions';
+
+export * as equalityChecks from './checks/equality';
+export * as similarityChecks from './checks/similarity';

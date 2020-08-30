@@ -56,6 +56,9 @@ export function computeCollectionSimilarityScore(a: Collection, b: Collection): 
   return computeSimilarityScore(a.items, b.items);
 }
 
+/**
+ * Computes the similarity score between 2 values.
+ */
 export function computeSimilarityScore(a: unknown, b: unknown): SimilarityScore {
   if (areValuesEqual(a, b)) {
     return 1;

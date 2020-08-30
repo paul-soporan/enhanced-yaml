@@ -1,6 +1,10 @@
-import { computeSimilarityScore, SimilarityScore } from './checks/similarity';
-import { mapAndFilter } from './mapAndFilter';
+import { computeSimilarityScore, SimilarityScore } from '../checks/similarity';
+import { mapAndFilter } from '../utils/mapAndFilter';
 
+/**
+ * Pairs all updated items with an original item or null,
+ * based on a similarity score system.
+ */
 export function pairItems<UpdatedItem, OriginalItem>({
   updated,
   original,
@@ -39,29 +43,37 @@ export function pairItems<UpdatedItem, OriginalItem>({
   const remainingOriginalItems = new Set(original);
 
   const itemPairs = mapAndFilter(items, ([updatedItem, originalItem, score]) => {
+    // This updated item has already been paired, we can skip this iteration.
     if (!remainingUpdatedItems.has(updatedItem)) {
       return mapAndFilter.skip;
     }
 
+    // This original item has already been paired, we can skip this iteration.
     if (remainingOriginalItems.size > 0 && !remainingOriginalItems.has(originalItem)) {
       return mapAndFilter.skip;
     }
 
+    // We delete the updated item so that further iterations know that it's already been paired
     remainingUpdatedItems.delete(updatedItem);
 
-    if (remainingOriginalItems.size === 0 || score === 0) {
+    if (
+      // If the updated item hasn't already been paired and we've run
+      // out of original items, we pair the updated item with null
+      remainingOriginalItems.size === 0 ||
+      // If the items are non-similar, we pair the updated item with null
+      score === 0
+    ) {
       return { updatedItem, originalItem: null };
     }
 
+    // We delete the original item so that further iterations know that it's already been paired
     remainingOriginalItems.delete(originalItem);
 
     return { updatedItem, originalItem };
   });
 
-  /*
-   * We pair the items again to make sure that we preserve the order of
-   * the updated array and that we don't lose any of the updated items.
-   */
+  // We pair the items again to make sure that we preserve the order of
+  // the updated array and that we don't lose any of the updated items.
   return updated.map((updatedItem) => {
     const index = itemPairs.findIndex(
       ({ updatedItem: updatedItemCandidate }) => updatedItemCandidate === updatedItem,
