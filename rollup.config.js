@@ -13,7 +13,7 @@ const config = {
   plugins: [
     ts({ exclude: ['.yarn/cache/**'] }),
     commonjs({ extensions: ['.js', '.ts'] }),
-    resolve({ resolveOnly: [] }),
+    resolve({ resolveOnly: [/(?!)/] }),
   ],
 };
 
