@@ -1,22 +1,22 @@
-<h1 align="center">smart-yaml</h1>
+<h1 align="center">enhanced-yaml</h1>
 
 <p align="center">
   YAML parser and stringifier that preserves comments and styling
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/smart-yaml"><img alt="npm" src="https://img.shields.io/npm/v/smart-yaml"></a>
-  <a href="https://github.com/paul-soporan/smart-yaml/actions?query=workflow%3ANode"><img alt="GitHub Actions Node Workflow" src="https://github.com/paul-soporan/smart-yaml/workflows/Node/badge.svg"></a>
-  <a href="https://github.com/paul-soporan/smart-yaml/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/smart-yaml"></a>
+  <a href="https://www.npmjs.com/package/enhanced-yaml"><img alt="npm" src="https://img.shields.io/npm/v/enhanced-yaml"></a>
+  <a href="https://github.com/paul-soporan/enhanced-yaml/actions?query=workflow%3ANode"><img alt="GitHub Actions Node Workflow" src="https://github.com/paul-soporan/enhanced-yaml/workflows/Node/badge.svg"></a>
+  <a href="https://github.com/paul-soporan/enhanced-yaml/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/enhanced-yaml"></a>
 </p>
 
 <p align="center">
-  <a href="https://smart-yaml.netlify.app/"><b>Documentation</b></a>
+  <a href="https://enhanced-yaml.netlify.app/"><b>Documentation</b></a>
 </p>
 
 ---
 
-`smart-yaml` is a YAML parser and stringifier written in TypeScript, built on top of the [`yaml`](https://github.com/eemeli/yaml) library. Operating on top of `yaml`'s powerful AST, `smart-yaml` is able to preserve as much information from the original source as possible when stringifying, which means that comments and styling can be preserved with very high accuracy.
+`enhanced-yaml` is a YAML parser and stringifier written in TypeScript, built on top of the [`yaml`](https://github.com/eemeli/yaml) library. Operating on top of `yaml`'s powerful AST, `enhanced-yaml` is able to preserve as much information from the original source as possible when stringifying, which means that comments and styling can be preserved with very high accuracy.
 
 ## Features
 
@@ -34,18 +34,18 @@
 
 Using Yarn:
 
-`yarn add smart-yaml`
+`yarn add enhanced-yaml`
 
 Using npm:
 
-`npm install smart-yaml`
+`npm install enhanced-yaml`
 
 TypeScript type definitions are included out-of-the-box.
 
 ## Usage
 
 ```ts
-import {safeLoad, safeDump} from 'smart-yaml';
+import {safeLoad, safeDump} from 'enhanced-yaml';
 
 const data = `
   # Above: foo
@@ -103,18 +103,18 @@ safeDump(
 
 ## API
 
-The public API consists mostly of the [`load`](https://smart-yaml.netlify.app/globals.html#load) and [`dump`](https://smart-yaml.netlify.app/globals.html#dump) functions which use the `core` schema by default and their safe counterparts ([`safeLoad`](https://smart-yaml.netlify.app/globals.html#safeload) and [`safeDump`](https://smart-yaml.netlify.app/globals.html#safedump)) which use the `failsafe` schema.
+The public API consists mostly of the [`load`](https://enhanced-yaml.netlify.app/globals.html#load) and [`dump`](https://enhanced-yaml.netlify.app/globals.html#dump) functions which use the `core` schema by default and their safe counterparts ([`safeLoad`](https://enhanced-yaml.netlify.app/globals.html#safeload) and [`safeDump`](https://enhanced-yaml.netlify.app/globals.html#safedump)) which use the `failsafe` schema.
 The function names were picked to be similar to [`js-yaml`](https://github.com/nodeca/js-yaml), which is the most widely used JavaScript YAML parser.
 
-`smart-yaml`'s internals are exported under the `internal` namespace, but they shouldn't be considered part of the public API and can be changed at any time.
+`enhanced-yaml`'s internals are exported under the `internal` namespace, but they shouldn't be considered part of the public API and can be changed at any time.
 
-For more details, please consult the [documentation](https://smart-yaml.netlify.app/).
+For more details, please consult the [documentation](https://enhanced-yaml.netlify.app/).
 
 **Notes:**
 
-- `smart-yaml`'s public API isn't tied to the [`yaml`](https://github.com/eemeli/yaml) library which is used internally and is only an implementation detail.
+- `enhanced-yaml`'s public API isn't tied to the [`yaml`](https://github.com/eemeli/yaml) library which is used internally and is only an implementation detail.
 - Not all of [`yaml`](https://github.com/eemeli/yaml)'s options are currently supported. They will be added gradually after considering how much sense they make in the context of preserving the original source's relevant information.
 
 ## How it works
 
-`smart-yaml` takes a unique approach to preserving the relevant information from the original source: rather than encoding the original information inside the parsed JavaScript value (which can often cause parts of the information to be lost when the value is manipulated in unintended ways), it works by taking the original YAML source as an argument to the `dump` function. It then parses it into a document and goes over each YAML node in the updated document and tries to find a matching node in the original document. It then mutates the original node with the minimal relevant updated information, which causes all original references to be preserved, which causes all anchors and aliases to be preserved.
+`enhanced-yaml` takes a unique approach to preserving the relevant information from the original source: rather than encoding the original information inside the parsed JavaScript value (which can often cause parts of the information to be lost when the value is manipulated in unintended ways), it works by taking the original YAML source as an argument to the `dump` function. It then parses it into a document and goes over each YAML node in the updated document and tries to find a matching node in the original document. It then mutates the original node with the minimal relevant updated information, which causes all original references to be preserved, which causes all anchors and aliases to be preserved.

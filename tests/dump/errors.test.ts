@@ -1,4 +1,4 @@
-import { dump } from 'smart-yaml';
+import { dump } from 'enhanced-yaml';
 import { YAMLSemanticError } from 'yaml/util';
 
 describe('dump', () => {

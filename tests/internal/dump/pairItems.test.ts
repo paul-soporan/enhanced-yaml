@@ -1,4 +1,4 @@
-import { internal } from 'smart-yaml';
+import { internal } from 'enhanced-yaml';
 
 const { pairItems } = internal;
 

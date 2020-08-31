@@ -1,5 +1,5 @@
-import { safeLoad, safeDump } from 'smart-yaml';
-import { joinYaml } from 'smart-yaml/tests/utils';
+import { safeLoad, safeDump } from 'enhanced-yaml';
+import { joinYaml } from 'enhanced-yaml/tests/utils';
 
 test('example', () => {
   const data = `

@@ -1,5 +1,5 @@
-import { dump } from 'smart-yaml';
-import { joinYaml } from 'smart-yaml/tests/utils';
+import { dump } from 'enhanced-yaml';
+import { joinYaml } from 'enhanced-yaml/tests/utils';
 
 describe('dump', () => {
   describe('Options', () => {

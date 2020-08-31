@@ -1,4 +1,4 @@
-import { load } from 'smart-yaml';
+import { load } from 'enhanced-yaml';
 import { YAMLSemanticError } from 'yaml/util';
 
 describe('load', () => {

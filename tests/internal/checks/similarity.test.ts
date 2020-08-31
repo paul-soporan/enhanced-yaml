@@ -1,5 +1,5 @@
 import { Scalar, Pair } from 'yaml/types';
-import { internal } from 'smart-yaml';
+import { internal } from 'enhanced-yaml';
 
 const { similarityChecks } = internal;
 

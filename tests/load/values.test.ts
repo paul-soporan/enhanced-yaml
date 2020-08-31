@@ -1,4 +1,4 @@
-import { load } from 'smart-yaml';
+import { load } from 'enhanced-yaml';
 
 describe('load', () => {
   describe('Values', () => {
