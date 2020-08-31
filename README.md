@@ -30,6 +30,65 @@ Using npm:
 
 TypeScript type definitions are included out-of-the-box.
 
+## Usage
+
+```ts
+import {safeLoad, safeDump} from 'smart-yaml';
+
+const data = `
+  # Above: foo
+  foo: # Aside: foo
+    bar: # Aside: bar
+      - 42 # Aside: 42
+
+      # A map
+      - a: # Aside: a
+          b # Aside: a's value
+
+      # A flow-style sequence
+      - [
+          # Above: a
+          a,
+          b,
+          c # Aside: c
+        ]
+`;
+
+safeLoad(data);
+// {
+//   foo: {
+//     bar: ['42', { a: 'b' }, ['a', 'b', 'c']],
+//   },
+// }
+
+safeDump(
+  {
+    foo: {
+      bar: ['42', ['c', 'd', 'a'], { a: 'c' }],
+    },
+  },
+  {},
+  data,
+),
+// # Above: foo
+// foo: # Aside: foo
+//   bar: # Aside: bar
+//     - 42 # Aside: 42
+//
+//     # A flow-style sequence
+//     - [
+//         c, # Aside: c
+//         d,
+//         # Above: a
+//         a
+//       ]
+//
+//     # A map
+//     - a: # Aside: a
+//         c # Aside: a's value
+//
+```
+
 ## How it works
 
 `smart-yaml` takes a unique approach to preserving the relevant information from the original source: rather than encoding the original information inside the parsed JavaScript value (which can often cause parts of the information to be lost when the value is manipulated in unintended ways), it works by taking the original YAML source as an argument to the `dump` function. It then parses it into a document and goes over each YAML node in the updated document and tries to find a matching node in the original document. It then mutates the original node with the minimal relevant updated information, which causes all original references to be preserved, which causes all anchors and aliases to be preserved.

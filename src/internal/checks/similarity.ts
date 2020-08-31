@@ -88,8 +88,6 @@ export function computeSimilarityScore(a: unknown, b: unknown): SimilarityScore 
     return computeCollectionSimilarityScore(a, b);
   }
 
-  /**
-   * Includes the case of non-equal primitives.
-   */
+  // Includes the case of non-equal primitives.
   return 0;
 }
