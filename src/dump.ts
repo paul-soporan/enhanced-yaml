@@ -16,6 +16,10 @@ interface RequiredDumpOptions {
   indentBlockSequences: boolean;
 
   /**
+   * If true, the original ordering of Map entries and Sequence items will be preserved.
+   *
+   * Applied before `sortMapEntries`.
+   *
    * @default false
    */
   preserveOriginalOrdering: boolean;

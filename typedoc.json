@@ -13,6 +13,7 @@
     "SafeLoadOptions",
     "DumpOptions",
     "LoadOptions",
-    "Schema"
+    "Schema",
+    "Pair"
   ]
 }
