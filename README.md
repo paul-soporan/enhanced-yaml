@@ -89,6 +89,20 @@ safeDump(
 //
 ```
 
+## API
+
+The public API consists mostly of the [`load`](https://smart-yaml.netlify.app/globals.html#load) and [`dump`](https://smart-yaml.netlify.app/globals.html#dump) functions which use the `core` schema by default and their safe counterparts ([`safeLoad`](https://smart-yaml.netlify.app/globals.html#safeload) and [`safeDump`](https://smart-yaml.netlify.app/globals.html#safedump)) which use the `failsafe` schema.
+The function names were picked to be similar to [`js-yaml`](https://github.com/nodeca/js-yaml), which is the most widely used JavaScript YAML parser.
+
+`smart-yaml`'s internals are exported under the `internal` namespace, but they shouldn't be considered part of the public API and can be changed at any time.
+
+For more details, please consult the [documentation](https://smart-yaml.netlify.app/).
+
+**Notes:**
+
+- `smart-yaml`'s public API isn't tied to the [`yaml`](https://github.com/eemeli/yaml) library which is used internally and is only an implementation detail.
+- Not all of [`yaml`](https://github.com/eemeli/yaml)'s options are currently supported. They will be added gradually after considering how much sense they make in the context of preserving the original source's relevant information.
+
 ## How it works
 
 `smart-yaml` takes a unique approach to preserving the relevant information from the original source: rather than encoding the original information inside the parsed JavaScript value (which can often cause parts of the information to be lost when the value is manipulated in unintended ways), it works by taking the original YAML source as an argument to the `dump` function. It then parses it into a document and goes over each YAML node in the updated document and tries to find a matching node in the original document. It then mutates the original node with the minimal relevant updated information, which causes all original references to be preserved, which causes all anchors and aliases to be preserved.
