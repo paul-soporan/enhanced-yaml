@@ -1,6 +1,16 @@
-# smart-yaml
+<h1 align="center">smart-yaml</h1>
 
-> YAML parser and stringifier that preserves comments and styling
+<p align="center">
+  YAML parser and stringifier that preserves comments and styling
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/smart-yaml"><img alt="npm" src="https://img.shields.io/npm/v/smart-yaml"></a>
+  <a href="https://github.com/paul-soporan/smart-yaml/actions?query=workflow%3ANode"><img alt="GitHub Actions Node Workflow" src="https://github.com/paul-soporan/smart-yaml/workflows/Node/badge.svg"></a>
+  <a href="https://github.com/paul-soporan/smart-yaml/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/smart-yaml"></a>
+</p>
+
+---
 
 `smart-yaml` is a YAML parser and stringifier written in TypeScript, built on top of the [`yaml`](https://github.com/eemeli/yaml) library. Operating on top of `yaml`'s powerful AST, `smart-yaml` is able to preserve as much information from the original source as possible when stringifying, which means that comments and styling can be preserved with very high accuracy.
 
