@@ -10,11 +10,13 @@
   <a href="https://github.com/paul-soporan/smart-yaml/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/smart-yaml"></a>
 </p>
 
+<p align="center">
+  <a href="https://smart-yaml.netlify.app/"><b>Documentation</b></a>
+</p>
+
 ---
 
 `smart-yaml` is a YAML parser and stringifier written in TypeScript, built on top of the [`yaml`](https://github.com/eemeli/yaml) library. Operating on top of `yaml`'s powerful AST, `smart-yaml` is able to preserve as much information from the original source as possible when stringifying, which means that comments and styling can be preserved with very high accuracy.
-
-**[Documentation](https://smart-yaml.netlify.app/)**
 
 ## Features
 
