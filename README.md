@@ -11,7 +11,7 @@
 - Load YAML documents represented as strings into their corresponding JavaScript values
 - Dump JavaScript values into their corresponding YAML documents represented as strings, while preserving the original comments and styling. The following information from the original source will be preserved:
   - Comments
-  - Scalar styles (plain / single quoted / double quoted / block folded / block literal)
+  - Scalar styles (plain / single quoted / double quoted / folded block / literal block)
   - Map / Sequence styles (block / flow)
   - Anchors
   - Aliases
